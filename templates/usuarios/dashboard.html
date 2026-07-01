@@ -1,0 +1,145 @@
+{% extends 'base/base.html' %}
+
+{% block titulo %}Dashboard - Escola de Condução{% endblock %}
+{% block page_title %}Dashboard{% endblock %}
+
+{% block conteudo %}
+<div class="row g-4 mb-4">
+
+    {% if user.perfil == 'admin' %}
+    <div class="col-md-3">
+        <div class="card stat-card p-3 border-start border-primary border-4">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <p class="text-muted mb-1 small">Total de Alunos</p>
+                    <h3 class="fw-bold mb-0">{{ total_alunos }}</h3>
+                </div>
+                <i class="fas fa-users fa-2x text-primary opacity-75"></i>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card stat-card p-3 border-start border-success border-4">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <p class="text-muted mb-1 small">Instrutores</p>
+                    <h3 class="fw-bold mb-0">{{ total_instrutores }}</h3>
+                </div>
+                <i class="fas fa-chalkboard-teacher fa-2x text-success opacity-75"></i>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card stat-card p-3 border-start border-warning border-4">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <p class="text-muted mb-1 small">Aulas Hoje</p>
+                    <h3 class="fw-bold mb-0">{{ aulas_hoje }}</h3>
+                </div>
+                <i class="fas fa-calendar fa-2x text-warning opacity-75"></i>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card stat-card p-3 border-start border-danger border-4">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <p class="text-muted mb-1 small">Pagamentos Pendentes</p>
+                    <h3 class="fw-bold mb-0">{{ pagamentos_pendentes }}</h3>
+                </div>
+                <i class="fas fa-money-bill fa-2x text-danger opacity-75"></i>
+            </div>
+        </div>
+    </div>
+
+    {% elif user.perfil == 'instrutor' %}
+    <div class="col-md-4">
+        <div class="card stat-card p-3 border-start border-primary border-4">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <p class="text-muted mb-1 small">Meus Alunos</p>
+                    <h3 class="fw-bold mb-0">{{ total_alunos }}</h3>
+                </div>
+                <i class="fas fa-users fa-2x text-primary opacity-75"></i>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card stat-card p-3 border-start border-warning border-4">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <p class="text-muted mb-1 small">Aulas Hoje</p>
+                    <h3 class="fw-bold mb-0">{{ aulas_hoje }}</h3>
+                </div>
+                <i class="fas fa-calendar fa-2x text-warning opacity-75"></i>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card stat-card p-3 border-start border-success border-4">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <p class="text-muted mb-1 small">Exames Este Mês</p>
+                    <h3 class="fw-bold mb-0">{{ exames_mes }}</h3>
+                </div>
+                <i class="fas fa-file-alt fa-2x text-success opacity-75"></i>
+            </div>
+        </div>
+    </div>
+
+    {% elif user.perfil == 'aluno' %}
+    <div class="col-md-4">
+        <div class="card stat-card p-3 border-start border-primary border-4">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <p class="text-muted mb-1 small">Minhas Aulas</p>
+                    <h3 class="fw-bold mb-0">{{ total_aulas }}</h3>
+                </div>
+                <i class="fas fa-calendar fa-2x text-primary opacity-75"></i>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card stat-card p-3 border-start border-success border-4">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <p class="text-muted mb-1 small">Exames</p>
+                    <h3 class="fw-bold mb-0">{{ total_exames }}</h3>
+                </div>
+                <i class="fas fa-file-alt fa-2x text-success opacity-75"></i>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card stat-card p-3 border-start border-danger border-4">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <p class="text-muted mb-1 small">Pagamentos Pendentes</p>
+                    <h3 class="fw-bold mb-0">{{ pagamentos_pendentes }}</h3>
+                </div>
+                <i class="fas fa-money-bill fa-2x text-danger opacity-75"></i>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+</div>
+
+<!-- Boas vindas -->
+<div class="card p-4">
+    <h5 class="fw-bold">
+        <i class="fas fa-hand-wave me-2 text-primary"></i>
+        Bem-vindo, {{ user.get_full_name|default:user.username }}!
+    </h5>
+    <p class="text-muted mb-0">
+        Hoje é {% now "d \d\e F \d\e Y" %}. 
+        {% if user.perfil == 'admin' %}
+        Tens acesso completo ao sistema.
+        {% elif user.perfil == 'instrutor' %}
+        Aqui podes gerir as tuas aulas e acompanhar os teus alunos.
+        {% else %}
+        Aqui podes acompanhar as tuas aulas, exames e pagamentos.
+        {% endif %}
+    </p>
+</div>
+{% endblock %}

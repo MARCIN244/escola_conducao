@@ -1,0 +1,48 @@
+{% extends 'base/base.html' %}
+{% block titulo %}Detalhe do Aluno{% endblock %}
+{% block page_title %}Detalhe do Aluno{% endblock %}
+
+{% block conteudo %}
+<div class="card">
+    <div class="card-body">
+        <h6 class="fw-bold text-primary mb-3">
+            <i class="fas fa-car me-2"></i>Dados do Aluno
+        </h6>
+        <div class="row g-3 mb-4">
+            <div class="col-md-6">
+                <strong>Nome:</strong> {{ aluno.usuario.get_full_name }}
+            </div>
+            <div class="col-md-6">
+                <strong>Número de Matrícula:</strong> {{ aluno.numero_matricula }}
+            </div>
+            <div class="col-md-6">
+                <strong>Categoria:</strong> {{ aluno.categoria }}
+            </div>
+            <div class="col-md-6">
+                <strong>Estado:</strong> {{ aluno.estado }}
+            </div>
+            <div class="col-md-6">
+                <strong>Instrutor:</strong> {{ aluno.instrutor }}
+            </div>
+            <div class="col-md-6">
+                <strong>Bilhete de Identidade:</strong> {{ aluno.bilhete_identidade }}
+            </div>
+            <div class="col-12">
+                <strong>Endereço:</strong> {{ aluno.endereco }}
+            </div>
+            <div class="col-12">
+                <strong>Observações:</strong> {{ aluno.observacoes }}
+            </div>
+        </div>
+
+        <div class="d-flex gap-2">
+            <a href="{% url 'editar_aluno' aluno.pk %}" class="btn btn-primary">
+                <i class="fas fa-edit me-2"></i>Editar
+            </a>
+            <a href="{% url 'lista_alunos' %}" class="btn btn-secondary">
+                <i class="fas fa-arrow-left me-2"></i>Voltar
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}
